@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TS Web Design Lab - プライバシーポリシー">
+    <title>プライバシーポリシー | TS Web Design Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts (Noto Serif JP と Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* プライバシーポリシーページ用のスタイル */
+        .privacy-policy-section {
+            padding: 120px 0 60px;
+            background-color: var(--bg-light);
+        }
+        
+        .privacy-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .privacy-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .privacy-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--main-color);
+            font-weight: 700;
+        }
+        
+        .privacy-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .privacy-section:last-child {
+            border-bottom: none;
+        }
+        
+        .privacy-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--main-color);
+            position: relative;
+            padding-left: 18px;
+        }
+        
+        .privacy-section h2::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            height: 16px;
+            width: 6px;
+            background-color: var(--main-color);
+            border-radius: 3px;
+        }
+        
+        .privacy-section p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+        
+        .privacy-section ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .privacy-section li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: var(--main-color);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .back-to-home:hover {
+            background-color: var(--main-color-dark);
+        }
+        
+        /* モバイル対応 */
+        @media (max-width: 768px) {
+            .privacy-content {
+                padding: 25px;
+            }
+            
+            .privacy-title {
+                font-size: 2rem;
+            }
+            
+            .privacy-section h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="site-header sticky">
+        <div class="container header-container">
+            <h1 class="site-logo">
+                <a href="/"><img src="TS ロゴ　デザイン.png" alt="TS Web Design Lab ロゴ"></a>
+            </h1>
+            <nav class="global-nav">
+                <ul>
+                    <li><a href="/#services">サービス</a></li>
+                    <li><a href="/#works">実績紹介</a></li>
+                    <li><a href="/#flow">制作フロー</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="/#company">会社概要</a></li>
+                    <li><a href="/#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="メニューを開閉" aria-expanded="false" aria-controls="global-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="privacy-policy-section">
+            <div class="container">
+                <div class="privacy-content">
+                    <div class="privacy-header">
+                        <h1 class="privacy-title">プライバシーポリシー</h1>
+                        <p>TS Web Design Labは、お客様の個人情報保護に関して以下のポリシーを定めています。</p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>個人情報の取得について</h2>
+                        <p>当サイトでは、お問い合わせフォーム等をご利用いただく際に、氏名、メールアドレス等の個人情報をご提供いただく場合があります。これらの情報は、お問い合わせへの対応、サービスの提供・改善、およびその他正当な目的のために利用いたします。</p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>個人情報の利用目的</h2>
+                        <p>ご提供いただいた個人情報は、以下の目的のために利用いたします。</p>
+                        <ul>
+                            <li>お問い合わせへの対応</li>
+                            <li>サービスの提供および向上</li>
+                            <li>当サイトに関する情報提供</li>
+                            <li>その他、上記に付随する目的</li>
+                        </ul>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>個人情報の第三者提供について</h2>
+                        <p>当サイトでは、法令に基づく場合を除き、ご提供いただいた個人情報を事前にご本人の同意を得ることなく第三者に提供することはありません。</p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>個人情報の管理について</h2>
+                        <p>ご提供いただいた個人情報は、適切かつ慎重に管理し、不正アクセス、紛失、破壊、改ざん、漏洩等の防止に努めます。</p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>個人情報の開示・訂正・削除について</h2>
+                        <p>ご自身の個人情報について、開示、訂正、削除をご希望される場合は、下記お問い合わせ先までご連絡ください。ご本人であることを確認の上、速やかに対応いたします。</p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>お問い合わせ先</h2>
+                        <p>当サイトのプライバシーポリシーに関するお問い合わせは、下記までご連絡ください。</p>
+                        <p><a href="mailto:info@ts-webdesign.lab">info@ts-webdesign.lab</a></p>
+                    </div>
+
+                    <div class="privacy-section">
+                        <h2>プライバシーポリシーの変更</h2>
+                        <p>当サイトは、必要に応じて本プライバシーポリシーの内容を変更することがあります。変更後のプライバシーポリシーは、当サイトに掲載した時点から効力を生じるものとします。</p>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="/" class="back-to-home">トップページに戻る</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p class="footer-logo">TS Web Design Lab</p>
+                    <p>© <span id="current-year"></span> TS Web Design Lab. All Rights Reserved.</p>
+                </div>
+                <nav class="footer-nav">
+                    <ul>
+                        <li><a href="/#services">サービス</a></li>
+                        <li><a href="/#works">実績紹介</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                        <li><a href="/privacy.html">プライバシーポリシー</a></li>
+                        <li><a href="/#contact">お問い合わせ</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-sns">
+                    <a href="https://x.com/your_account" target="_blank" rel="noopener noreferrer" aria-label="X">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                            <path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 自作JavaScriptファイル -->
+    <script src="script.js"></script>
+    <script>
+        // 現在の年を取得してフッターに表示
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

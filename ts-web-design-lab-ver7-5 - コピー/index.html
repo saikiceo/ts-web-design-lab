@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TS Web Design Lab - 最新技術とデザインで、インパクトあるウェブサイトを創出します。">
+    <title>TS Web Design Lab - トップページ</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts (例: Noto Serif JP と Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- カスタムカーソル用要素 -->
+    <div class="custom-cursor"></div>
+
+    <!-- ヘッダー -->
+    <header class="site-header sticky">
+        <div class="container header-container">
+            <h1 class="site-logo">
+                <a href="/">TS Web Design Lab</a>
+            </h1>
+            <nav class="global-nav">
+                <ul>
+                    <li><a href="#services">サービス</a></li>
+                    <li><a href="#works">実績紹介</a></li>
+                    <li><a href="#flow">制作フロー</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#company">会社概要</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                    <!-- 将来的なページへのリンクも想定 -->
+                    <!-- <li><a href="/products.html">商品</a></li> -->
+                    <!-- <li><a href="/privacy.html">プライバシーポリシー</a></li> -->
+                    <!-- <li><a href="/price.html">料金表</a></li> -->
+                </ul>
+            </nav>
+            <button class="menu-toggle" aria-label="メニューを開閉" aria-expanded="false" aria-controls="global-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- ヒーローセクション (ファーストビュー) -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h2 class="hero-catchphrase">
+                        訪問者の心を掴む、<br>魅力的なウェブサイトを。
+                    </h2>
+                    <p class="hero-description animated-element">
+                        <span>HTML, CSS, JavaScriptの粋を集め、AI技術も駆使。<br></span>
+                        <span>洗練されたデザインから温かみのある表現まで、<br></span>
+                        <span>あなたのビジネスに最適なウェブサイトを創造します。</span>
+                    </p>
+                    <a href="#contact" class="cta-button animated-element">お問い合わせはこちら</a>
+                </div>
+                <!-- インタラクティブなノイズパターンを描画するCanvas -->
+                <canvas id="noise-background"></canvas>
+                <!-- 3D回転キューブを描画するCanvas -->
+                <div id="hero-3d-canvas" class="hero-3d-object animated-element"></div>
+            </div>
+            <div class="scroll-down-indicator">
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- サービスセクション -->
+        <section id="services" class="content-section gradient-background-animation">
+            <div class="container">
+                <h2 class="section-title"><span class="reveal-text">S</span><span class="reveal-text">e</span><span class="reveal-text">r</span><span class="reveal-text">v</span><span class="reveal-text">i</span><span class="reveal-text">c</span><span class="reveal-text">e</span><span class="reveal-text">s</span></h2>
+                <p class="section-subtitle animated-element">お客様のビジネスを加速させる、最適なウェブソリューションを提供します。</p>
+                <div class="service-grid">
+                    <!-- サービスカード 1 -->
+                    <div class="service-card animated-element">
+                        <div class="service-icon"><img src="images/image_fx (29).jpg" alt="ホームページ制作の画像"></div>
+                        <h3 class="service-title">ホームページ制作</h3>
+                        <p class="service-description">企画・デザインから実装、公開後の運用までトータルでサポート。ビジネスの顔となる高品質なサイトを構築します。</p>
+                    </div>
+                    <!-- サービスカード 2 -->
+                    <div class="service-card animated-element">
+                        <div class="service-icon"><img src="images/image_fx (14).jpg" alt="ランディングページ制作の画像"></div>
+                        <h3 class="service-title">ランディングページ制作</h3>
+                        <p class="service-description">コンバージョンを最大化するための戦略的なLPをデザイン・制作。広告効果を高めます。</p>
+                    </div>
+                    <!-- サービスカード 3 -->
+                    <div class="service-card animated-element">
+                        <div class="service-icon"><img src="images/image_fx (13).jpg" alt="ECサイト構築の画像"></div>
+                        <h3 class="service-title">ECサイト構築</h3>
+                        <p class="service-description">売れるECサイトの構築・カスタマイズ。Shopify, WooCommerceなど幅広く対応可能です。</p>
+                    </div>
+                     <!-- サービスカード 4 (追加例) -->
+                    <div class="service-card animated-element">
+                         <div class="service-icon"><img src="images/image_fx (12).jpg" alt="UI/UXデザインの画像"></div>
+                         <h3 class="service-title">UI/UXデザイン</h3>
+                         <p class="service-description">ユーザー中心設計に基づき、使いやすく魅力的なインターフェースと体験をデザインします。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 実績紹介セクション -->
+        <section id="works" class="content-section bg-light">
+            <div class="container">
+                <h2 class="section-title"><span class="reveal-text">W</span><span class="reveal-text">o</span><span class="reveal-text">r</span><span class="reveal-text">k</span><span class="reveal-text">s</span></h2>
+                <p class="section-subtitle animated-element">私たちが手がけたプロジェクトの一部をご紹介します。</p>
+                <div class="works-grid">
+                    <!-- 実績カード 1 -->
+                    <a href="#" class="work-card animated-element interactive-element">
+                        <div class="work-card-image">
+                             <!-- 画像は実際のプロジェクト画像に差し替えてください -->
+                            <img src="images2/サンプルとしてオンラインサイト「ポラリス」のトップ画面.jpg" alt="POLARIS様 コーポレートサイトのサムネイル">
+                        </div>
+                        <div class="work-card-content">
+                            <h3 class="work-title">POLARIS様 コーポレートサイト</h3>
+                            <p class="work-category">Webサイト制作 / ブランディング</p>
+                        </div>
+                    </a>
+                    <!-- 実績カード 2 -->
+                    <a href="#" class="work-card animated-element interactive-element">
+                         <div class="work-card-image">
+                            <!-- 画像は実際のプロジェクト画像に差し替えてください -->
+                            <img src="images2/creativestudio (1472×832).jpg" alt="1CREATIVE STUDIO XYZ様 コーポレートサイトのサムネイル">
+                         </div>
+                         <div class="work-card-content">
+                            <h3 class="work-title">CREATIVE STUDIO様 コーポレートサイト</h3>
+                            <p class="work-category">Webサイト制作 / ブランディング</p>
+                        </div>
+                    </a>
+                    <!-- 実績カード 3 -->
+                     <a href="#" class="work-card animated-element interactive-element">
+                         <div class="work-card-image">
+                             <!-- 画像は実際のプロジェクト画像に差し替えてください -->
+                             <img src="images2/美容室の風景　モダン　ナチュラル　　ホームページ用　NameisBLAZE.jpg" alt="オンラインストア「ポラリス」様のサムネイル">
+                         </div>
+                         <div class="work-card-content">
+                             <h3 class="work-title">BLAIZE様 ECサイト</h3>
+                             <p class="work-category">ECサイト構築 / UIデザイン</p>
+                         </div>
+                    </a>
+                    <!-- 必要に応じて実績カードを追加 -->
+                </div>
+                <div class="view-more-button-wrapper animated-element">
+                    <a href="#" class="cta-button">実績をもっと見る</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 制作フローセクション -->
+        <section id="flow" class="content-section gradient-background-animation">
+             <div class="container">
+                <h2 class="section-title"><span class="reveal-text">F</span><span class="reveal-text">l</span><span class="reveal-text">o</span><span class="reveal-text">w</span></h2>
+                <p class="section-subtitle animated-element">お問い合わせから納品までの基本的な流れです。</p>
+                <div class="flow-steps">
+                    <!-- ステップ 1 -->
+                    <div class="flow-step animated-element">
+                        <div class="flow-step-icon"><svg><!-- ここに問い合わせアイコンのSVGコードを入れてください --></svg></div>
+                        <div class="flow-step-content">
+                            <span class="flow-step-number">01</span>
+                            <h3 class="flow-step-title">お問い合わせ・ヒアリング</h3>
+                            <p>まずはお気軽にご相談ください。目的やご要望を詳しく伺います。</p>
+                        </div>
+                    </div>
+                     <!-- ステップ 2 -->
+                    <div class="flow-step animated-element">
+                        <div class="flow-step-icon"><svg><!-- ここに提案・見積アイコンのSVGコードを入れてください --></svg></div>
+                        <div class="flow-step-content">
+                            <span class="flow-step-number">02</span>
+                            <h3 class="flow-step-title">ご提案・お見積もり</h3>
+                            <p>ヒアリング内容に基づき、最適なプランとお見積もりをご提示します。</p>
+                        </div>
+                    </div>
+                    <!-- ステップ 3 -->
+                     <div class="flow-step animated-element">
+                        <div class="flow-step-icon"><svg><!-- ここにデザイン制作アイコンのSVGコードを入れてください --></svg></div>
+                        <div class="flow-step-content">
+                            <span class="flow-step-number">03</span>
+                            <h3 class="flow-step-title">デザイン・設計</h3>
+                            <p>サイトマップ、ワイヤーフレームを作成し、デザインを具体化します。</p>
+                        </div>
+                    </div>
+                    <!-- ステップ 4 -->
+                    <div class="flow-step animated-element">
+                        <div class="flow-step-icon"><svg><!-- ここに実装・開発アイコンのSVGコードを入れてください --></svg></div>
+                        <div class="flow-step-content">
+                            <span class="flow-step-number">04</span>
+                            <h3 class="flow-step-title">実装・開発</h3>
+                            <p>デザインに基づき、コーディングやシステム開発を行います。</p>
+                        </div>
+                    </div>
+                    <!-- ステップ 5 -->
+                    <div class="flow-step animated-element">
+                        <div class="flow-step-icon"><svg><!-- ここに確認・納品アイコンのSVGコードを入れてください --></svg></div>
+                        <div class="flow-step-content">
+                            <span class="flow-step-number">05</span>
+                            <h3 class="flow-step-title">ご確認・公開・納品</h3>
+                            <p>最終確認後、ウェブサイトを公開し、データを納品します。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- よくあるご質問 (FAQ) セクション -->
+        <section id="faq" class="content-section bg-light faq-section-with-bg">
+             <div class="container">
+                <h2 class="section-title"><span class="reveal-text">F</span><span class="reveal-text">A</span><span class="reveal-text">Q</span></h2>
+                 <p class="section-subtitle animated-element">よくいただくご質問とその回答です。</p>
+                 <div class="faq-list">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item animated-element">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-1">
+                            <span>ウェブサイト制作の費用はどのくらいかかりますか？</span>
+                            <span class="faq-icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-1" hidden>
+                            <p>制作するウェブサイトの規模や機能、コンテンツの内容によって費用は変動します。まずはお客様のご要望を詳しくお伺いし、最適なプランと合わせてお見積もりをご提示させていただきますので、お気軽にお問い合わせください。</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item animated-element">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-2">
+                             <span>制作期間はどれくらいですか？</span>
+                             <span class="faq-icon" aria-hidden="true"></span>
+                        </button>
+                        <div class="faq-answer" id="faq-answer-2" hidden>
+                             <p>一般的なコーポレートサイトの場合、ヒアリングから公開まで2週間〜1.5ケ月程度が目安となりす。ただし、サイトの規模や機能、素材のご提供状況によって変動いたします。お急ぎの場合も可能な限り対応いたしますので、ご相談ください。</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item animated-element">
+                        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-3">
+                             <span>ウェブサイトの知識がなくても依頼できますか？</span>
+                             <span class="faq-icon" aria-hidden="true"></span>
+                         </button>
+                         <div class="faq-answer" id="faq-answer-3" hidden>
+                             <p>はい、もちろんです。専門用語を避け、分かりやすい言葉で丁寧にご説明いたします。企画段階から公開、その後の運用まで、お客様に寄り添ってサポートいたしますのでご安心ください。</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 (追加例) -->
+                    <div class="faq-item animated-element">
+                         <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-4">
+                             <span>納品後の修正や更新もお願いできますか？</span>
+                              <span class="faq-icon" aria-hidden="true"></span>
+                         </button>
+                         <div class="faq-answer" id="faq-answer-4" hidden>
+                             <p>はい、承っております。簡単なテキスト修正から、コンテンツ追加、機能改修まで幅広く対応可能です。保守運用プランはご相談ください。</p>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+        </section>
+
+         <!-- 会社概要セクション -->
+         <section id="company" class="content-section gradient-background-animation">
+             <div class="container">
+                 <h2 class="section-title"><span class="reveal-text">C</span><span class="reveal-text">o</span><span class="reveal-text">m</span><span class="reveal-text">p</span><span class="reveal-text">a</span><span class="reveal-text">n</span><span class="reveal-text">y</span></h2>
+                 <p class="section-subtitle animated-element">私たちの会社についての情報です。</p>
+                 <div class="company-info animated-element">
+                     <dl class="company-details">
+                         <dt>会社名</dt>
+                         <dd>TS Web Design Lab (ティーエス ウェブデザイン ラボ)</dd>
+                         <dt>所在地</dt>
+                         <dd>〒XXX-XXXX [ここに住所を記載]</dd>
+                         <dt>設立</dt>
+                         <dd>[ここに設立年月日を記載]</dd>
+                         <dt>代表者</dt>
+                         <dd>[ここに代表者名を記載]</dd>
+                         <dt>事業内容</dt>
+                         <dd>
+                            <ul>
+                                <li>ウェブサイト企画・デザイン・制作</li>
+                                <li>ランディングページ制作</li>
+                                <li>UI/UXデザイン</li>
+                                <li>ウェブコンサルティング</li>
+                                <!-- 他の事業内容があれば追加 -->
+                            </ul>
+                         </dd>
+                         <dt>電話番号</dt>
+                         <dd>[ここに電話番号を記載]</dd>
+                         <dt>メールアドレス</dt>
+                         <dd><a href="mailto:[ここにメールアドレスを記載]">[ここにメールアドレスを記載]</a></dd>
+                     </dl>
+                     <!-- Google Map 埋め込みエリア (オプション) -->
+                     <div class="company-map animated-element">
+                         <!-- ★★★★★ ここにGoogle Mapsの埋め込みコードを貼り付けてください ★★★★★ -->
+                         <!-- 例: 東京タワー -->
+                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.747977593677!2d139.7444413155659!3d35.65858048019946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bbd9009ec09%3A0x481a93f0d2a409dd!2z5p2x5Lqs44K_44Ov44O8!5e0!3m2!1sja!2sjp!4v1678886400000" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                         <p style="text-align: center; margin-top: 10px; font-size: 0.9em;">
+                            <!-- ★★★★★ 上の地図に合わせて正しいリンクにしてください ★★★★★ -->
+                            <a href="https://maps.app.goo.gl/1zX1Y2Z3A4B5C6D7E" target="_blank" rel="noopener noreferrer" style="color: var(--main-color);">大きな地図で見る</a>
+                         </p>
+                     </div>
+                 </div>
+             </div>
+        </section>
+
+         <!-- お問い合わせセクション -->
+        <section id="contact" class="content-section cta-section bg-light"> <!-- 背景色を変更 -->
+            <div class="container">
+                <h2 class="section-title"><span class="reveal-text">C</span><span class="reveal-text">o</span><span class="reveal-text">n</span><span class="reveal-text">t</span><span class="reveal-text">a</span><span class="reveal-text">c</span><span class="reveal-text">t</span></h2>
+                <p class="section-subtitle animated-element">ウェブサイト制作に関するご相談、お見積もりはお気軽にお問い合わせください。</p>
+
+                <div class="contact-methods animated-element">
+                    <div class="contact-method">
+                        <h3 class="contact-method-title">お電話でのお問い合わせ</h3>
+                        <!-- ★★★★★ 電話番号を記載 ★★★★★ -->
+                        <p class="contact-detail phone-number"><a href="tel:03-XXXX-XXXX">03-XXXX-XXXX</a></p>
+                        <p class="contact-note">受付時間: 平日 9:00〜18:00</p>
+                    </div>
+                    <div class="contact-method">
+                         <h3 class="contact-method-title">メールでのお問い合わせ</h3>
+                         <!-- ★★★★★ メールアドレスを記載 ★★★★★ -->
+                         <p class="contact-detail"><a href="mailto:info@ts-webdesign.lab">info@ts-webdesign.lab</a></p>
+                         <p class="contact-note">24時間受付（返信は営業時間内となります）</p>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper animated-element">
+                    <h3 class="form-title">お問い合わせフォーム</h3>
+                    <!-- ★★★★★ フォームの送信先 (action) や方法は別途設定が必要です ★★★★★ -->
+                    <form id="contact-form" action="#" method="POST" novalidate> <!-- novalidateでブラウザ標準のバリデーションを一旦無効化（JSで制御するため） -->
+                        <div class="form-group">
+                            <label for="name">お名前 <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" required aria-required="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">メールアドレス <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required aria-required="true">
+                        </div>
+                         <div class="form-group">
+                            <label for="company_name">会社名・組織名</label>
+                            <input type="text" id="company_name" name="company_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">件名</label>
+                            <input type="text" id="subject" name="subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">お問い合わせ内容 <span class="required">*</span></label>
+                            <textarea id="message" name="message" rows="6" required aria-required="true"></textarea>
+                        </div>
+                        <div class="form-group privacy-consent">
+                             <input type="checkbox" id="privacy" name="privacy" value="agreed" required aria-required="true">
+                             <!-- ★★★★★ プライバシーポリシーページのパスを確認 ★★★★★ -->
+                             <label for="privacy"><a href="/privacy.html" target="_blank">プライバシーポリシー</a>に同意する <span class="required">*</span></label>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="cta-button">送信する</button>
+                        </div>
+                         <!-- 送信結果表示用エリア (任意) -->
+                         <div id="form-message" role="status" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p class="footer-logo">TS Web Design Lab</p>
+                    <p>© <span id="current-year"></span> TS Web Design Lab. All Rights Reserved.</p>
+                </div>
+                <nav class="footer-nav">
+                    <ul>
+                         <!-- フッターナビのリンクは必要に応じて調整 -->
+                        <li><a href="#services">サービス</a></li>
+                        <li><a href="#works">実績紹介</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                         <!-- ★★★★★ プライバシーポリシーページのパスを確認 ★★★★★ -->
+                        <li><a href="/privacy.html">プライバシーポリシー</a></li>
+                        <li><a href="#contact">お問い合わせ</a></li>
+                    </ul>
+                </nav>
+                 <!-- SNS連携 -->
+                <div class="footer-sns">
+                     <!-- ★★★★★ X (Twitter) のアカウントURLに変更 ★★★★★ -->
+                    <a href="https://x.com/your_account" target="_blank" rel="noopener noreferrer" aria-label="X">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24">
+                            <!-- !Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. -->
+                            <path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/>
+                        </svg>
+                    </a>
+                    <!-- 他のSNSアイコンが必要な場合はここに追加 (例: Instagram, Facebook) -->
+                    <!--
+                    <a href="https://instagram.com/your_account" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg>...</svg>
+                    </a>
+                    -->
+                 </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Three.js ライブラリ読み込み (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- RGBELoader 読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+    <!-- GSAP (アニメーションライブラリ) 読み込み (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+    <!-- 自作JavaScriptファイル -->
+    <script src="script.js"></script>
+</body>
+</html>
