@@ -207,10 +207,24 @@ ul {
     color: var(--white-color);
     padding-top: var(--header-height); /* ヘッダー分下げる */
     /* 背景画像とパララックス効果 */
-    background-image: linear-gradient(135deg, var(--main-color) 0%, #051937 100%);
+    background-image: url('images/デザイン事務所のデスク　夜　間接照明　モニター　オシャレ　モダン　本棚　男性の後ろ姿.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
+    z-index: 0; /* 背景の基準 */
+}
+
+/* 背景画像の上に重ねるオーバーレイ */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* 上部を暗く、下部をさらに暗くするグラデーション */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1; /* 背景とコンテンツの間に */
 }
  
 /* ノイズパターン背景用Canvas */
@@ -220,7 +234,7 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 3; /* ヒーローコンテンツや3Dオブジェクトより手前に */
+    z-index: 2; /* オーバーレイより手前に */
     pointer-events: none; /* マウスイベントを透過 */
 }
  
@@ -229,22 +243,26 @@ ul {
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    z-index: 3; /* オーバーレイより手前に */
+    position: relative; /* z-indexを有効にするために必要 */
 }
-
+ 
 .hero-content {
     flex: 1;
     max-width: 600px;
-    z-index: 2; /* 3Dオブジェクトより手前に */
+    z-index: 3; /* オーバーレイより手前に */
+    position: relative; /* z-indexを有効にするために必要 */
 }
-
+ 
 .hero-catchphrase {
     font-family: var(--font-main);
     font-size: 3rem; /* 大きめに */
     font-weight: 700;
     line-height: 1.3;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* テキストシャドウを追加 */
 }
-
+ 
 /* テキストアニメーション用 */
 .reveal-text {
     display: inline-block;
@@ -253,14 +271,15 @@ ul {
     transform-origin: center 50% -10px;
     /* アニメーションはJSで制御 */
 }
-
+ 
 .hero-description {
     font-size: 1.1rem;
     margin-bottom: 30px;
     opacity: 0; /* アニメーション用 */
     /* アニメーションタイミングはJSで制御 (animated-element) */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4); /* テキストシャドウを追加 */
 }
-
+ 
 .cta-button {
     display: inline-block;
     background-color: var(--accent-color);
@@ -275,20 +294,22 @@ ul {
      /* アニメーションタイミングはJSで制御 (animated-element) */
     border: none; /* ボタンのデフォルトボーダー解除 */
     cursor: pointer;
+    z-index: 3; /* オーバーレイより手前に */
+    position: relative; /* z-indexを有効にするために必要 */
 }
-
+ 
 .cta-button:hover {
     transform: scale(1.05); /* ホバーで少し拡大 */
     background-color: var(--white-color);
     color: var(--main-color);
 }
-
+ 
 .hero-3d-object {
     flex: 1;
     min-height: 50vh; /* 高さを指定 */
     max-width: 500px; /* 最大幅 */
-    z-index: 1;
-    position: relative; /* 必要に応じて */
+    z-index: 3; /* オーバーレイより手前に */
+    position: relative; /* z-indexを有効にするために必要 */
     opacity: 0; /* アニメーション用 */
      /* アニメーションタイミングはJSで制御 (animated-element) */
 }
@@ -297,7 +318,7 @@ ul {
     width: 100%; /* 親要素に合わせる */
     height: 100%;
 }
-
+ 
 .scroll-down-indicator {
     position: absolute;
     bottom: 30px;
@@ -307,7 +328,7 @@ ul {
     font-size: 0.8rem;
     font-family: var(--font-main);
     opacity: 0.7;
-    z-index: 3;
+    z-index: 3; /* オーバーレイより手前に */
     animation: bounce 2s infinite;
 }
 .scroll-down-indicator span::after {
@@ -318,7 +339,7 @@ ul {
     background-color: var(--white-color);
     margin: 5px auto 0;
 }
-
+ 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateX(-50%) translateY(0);
@@ -330,7 +351,7 @@ ul {
         transform: translateX(-50%) translateY(-5px);
     }
 }
-
+ 
 /* コンテンツセクション共通スタイル */
 .content-section {
     padding: 100px 0;
