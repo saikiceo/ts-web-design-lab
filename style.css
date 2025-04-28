@@ -220,7 +220,7 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0; /* ヒーローコンテンツより奥に */
+    z-index: 3; /* ヒーローコンテンツや3Dオブジェクトより手前に */
     pointer-events: none; /* マウスイベントを透過 */
 }
  
@@ -285,7 +285,7 @@ ul {
 
 .hero-3d-object {
     flex: 1;
-    height: 50vh; /* 高さを指定 */
+    min-height: 50vh; /* 高さを指定 */
     max-width: 500px; /* 最大幅 */
     z-index: 1;
     position: relative; /* 必要に応じて */
@@ -294,8 +294,8 @@ ul {
 }
 #hero-3d-canvas canvas {
     display: block; /* canvas下の余白削除 */
-    width: 100% !important; /* 親要素に合わせる */
-    height: 100% !important;
+    width: 100%; /* 親要素に合わせる */
+    height: 100%;
 }
 
 .scroll-down-indicator {
@@ -1330,8 +1330,309 @@ ul {
     }
 }
 
+/* すべてのセクションに適用されるグラデーションアニメーション */
 .gradient-background-animation {
-    background: linear-gradient(270deg, rgba(27, 58, 95, 0.2), rgba(0, 255, 255, 0.1)); /* やや濃いグラデーション */
-    background-size: 200% 200%; /* アニメーションで動かすためにサイズを大きく */
-    animation: gradientAnimation 10s ease infinite; /* アニメーション適用 */
+    background: linear-gradient(-45deg, #1a2a6c, #2d364c, #4a3f6d, #4b6cb7, #682c58);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+/* 各セクション用の個別設定 (今回は共通設定と同じ) */
+/* 必要に応じてここに個別のグラデーションやアニメーション設定を記述 */
+/*
+#flow.gradient-background-animation,
+#company.gradient-background-animation {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); // 例: 別のグラデーション
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+*/
+
+/* 波紋エフェクト */
+.wave-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 5; /* スクロールインジケーターより前に */
+}
+
+.wave {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 150px;
+}
+
+/* 波紋アニメーション */
+@keyframes wave-animation {
+  0% {
+    transform: translateX(0) translateZ(0);
+  }
+  50% {
+    transform: translateX(-25%) translateZ(0);
+  }
+  100% {
+    transform: translateX(0) translateZ(0);
+  }
+}
+
+@keyframes wave-animation-reverse {
+  0% {
+    transform: translateX(0) translateZ(0);
+  }
+  50% {
+    transform: translateX(25%) translateZ(0);
+  }
+  100% {
+    transform: translateX(0) translateZ(0);
+  }
+}
+
+.wave-1 path {
+  animation: wave-animation 15s linear infinite;
+  fill: rgba(255, 255, 255, 0.8);
+}
+
+.wave-2 {
+  margin-top: -150px;
+}
+
+.wave-2 path {
+  animation: wave-animation-reverse 20s linear infinite;
+  fill: rgba(255, 255, 255, 0.5);
+}
+
+.wave-3 {
+  margin-top: -150px;
+}
+
+.wave-3 path {
+  animation: wave-animation 25s linear infinite;
+  fill: rgba(255, 255, 255, 1);
+}
+
+/* グラデーション背景上のテキスト色調整 */
+.gradient-background-animation .section-title,
+.gradient-background-animation .section-subtitle,
+.gradient-background-animation p {
+    color: #ffffff;
+}
+
+/* FLOWセクションの各ステップアイコンをリッチに改良 */
+
+/* 共通アイコンスタイル - 既存スタイルを拡張 */
+.flow-step-icon {
+    flex-shrink: 0;
+    width: 90px; /* サイズ拡大 */
+    height: 90px; /* サイズ拡大 */
+    background: linear-gradient(135deg, #273c75, #4a69bd); /* グラデーション背景 */
+    border: none; /* 既存のボーダーを削除 */
+    border-radius: 50%; /* 丸いアイコン */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.5); /* 立体的な影とハイライト */
+    transition: all 0.3s ease;
+    position: relative; /* 擬似要素の基準 */
+    overflow: hidden; /* 内部要素のはみ出し防止 */
+    z-index: 1; /* 他の要素より手前に */
+}
+
+.flow-step-icon svg {
+    width: 50px; /* SVGサイズ調整 */
+    height: 50px; /* SVGサイズ調整 */
+    color: #ffffff; /* アイコン色を白に */
+    z-index: 2; /* SVGを背景より手前に */
+}
+
+/* ホバーエフェクト */
+.flow-step:hover .flow-step-icon {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+/* 各ステップごとのグラデーションカラーバリエーション */
+/* 必要に応じてこれらのコメントアウトを解除し、色を調整 */
+/*
+.flow-steps .flow-step:nth-child(1) .flow-step-icon {
+    background: linear-gradient(135deg, #f093fb, #f5576c); // 例: ピンク系
+}
+
+.flow-steps .flow-step:nth-child(2) .flow-step-icon {
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee); // 例: パステル系
+}
+
+.flow-steps .flow-step:nth-child(3) .flow-step-icon {
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb); // 例: 水色系
+}
+
+.flow-steps .flow-step:nth-child(4) .flow-step-icon {
+    background: linear-gradient(135deg, #84fab0, #8fd3f4); // 例: 緑青系
+}
+
+.flow-steps .flow-step:nth-child(5) .flow-step-icon {
+    background: linear-gradient(135deg, #cfd9db, #e2ebf0); // 例: グレー系
+}
+*/
+
+/* 全セクション共通のグラデーションアニメーション */
+.gradient-background-animation {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 背景グラデーションをセクションの擬似要素として追加 */
+.gradient-background-animation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(-45deg,
+        #1a2a6c,  /* ディープネイビー */
+        #2d364c,  /* ダークスレート */
+        #4a3f6d,  /* ディープパープル */
+        #4b6cb7,  /* ロイヤルブルー */
+        #682c58   /* バーガンディ */
+    );
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+/* グラデーション背景上のコンテンツ視認性向上 */
+.gradient-background-animation .section-title,
+.gradient-background-animation .section-subtitle,
+.gradient-background-animation p {
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-background-animation .service-card,
+.gradient-background-animation .flow-step-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+}
+
+/* グラデーションアニメーションのキーフレーム */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* 文字の視認性向上に関する追加CSS */
+
+/* グラデーション背景上のテキスト視認性改善 */
+.gradient-background-animation .section-title,
+.gradient-background-animation .section-subtitle,
+.gradient-background-animation p,
+.gradient-background-animation h3,
+.gradient-background-animation span { /* spanも追加 */
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* セクションタイトルの強調 */
+.gradient-background-animation .section-title {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* セクションタイトル下線の強調 */
+.gradient-background-animation .section-title::after {
+    background-color: var(--white-color); /* 明るい色に */
+}
+
+/* コンテンツ要素の背景とコントラスト改善 */
+.gradient-background-animation .service-card,
+.gradient-background-animation .flow-step-content {
+    background-color: rgba(255, 255, 255, 0.95); /* 不透明度を高く */
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    color: var(--text-color); /* テキスト色を元の色に戻す */
+}
+
+/* フローステップのコンテンツ部分に半透明の背景と霧ガラス効果 */
+.flow-step-content {
+    background-color: rgba(255, 255, 255, 0.8); /* 半透明の白 */
+    backdrop-filter: blur(5px); /* 霧ガラス効果 */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 会社概要セクションのテキスト色と区切り線 */
+#company.gradient-background-animation dt,
+#company.gradient-background-animation dd,
+#company.gradient-background-animation li {
+    color: var(--white-color); /* 白いテキスト */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#company.gradient-background-animation .company-details dt {
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.5); /* 白い点線 */
+}
+
+/* レスポンシブ対応 (例: モバイルでの調整) */
+@media (max-width: 768px) {
+    .gradient-background-animation .section-title {
+        font-size: 2rem;
+    }
+    .gradient-background-animation .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+    .gradient-background-animation .service-card,
+    .gradient-background-animation .flow-step-content {
+        padding: 15px;
+    }
+}
+
+/* ナビゲーションメニューのテキストシャドウ */
+.global-nav a {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ヒーローセクションのキャッチフレーズと説明文のシャドウ強化 */
+.hero-catchphrase {
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.hero-description {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* リスト項目のマーカー色調整 (必要に応じて) */
+.gradient-background-animation ul li::before {
+    color: var(--accent-color); /* マーカーの色 */
+}
+
+/* ServicesおよびFlowセクション内のテキスト視認性向上 */
+.gradient-background-animation .service-card h3,
+.gradient-background-animation .service-card p,
+.gradient-background-animation .flow-step-content h3,
+.gradient-background-animation .flow-step-content p,
+.gradient-background-animation .flow-step-content span {
+    color: #111; /* より濃いテキスト色 */
+    text-shadow: none; /* テキストシャドウを解除してクリアに */
+}
+
+/* 必要に応じて、カードやステップコンテンツの背景を完全に不透明にする */
+.gradient-background-animation .service-card,
+.gradient-background-animation .flow-step-content {
+    background-color: #ffffff; /* 不透明な白 */
+    backdrop-filter: none; /* 霧ガラス効果を解除 */
 }

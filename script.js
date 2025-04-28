@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            console.log('Anchor clicked:', this.getAttribute('href')); // デバッグログ追加
             const href = this.getAttribute('href');
             let targetElement = null;
             try {
                 // hrefが '#' または空文字でなく、かつセレクタとして有効な場合のみ要素を探す
                 if (href && href !== '#' && !href.startsWith('#') === false) {
                     targetElement = document.querySelector(href);
+                    console.log('Target element:', targetElement); // デバッグログ追加
                 }
             } catch (err) {
                 console.warn(`Invalid selector: ${href}`);
@@ -36,9 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ページ内リンクの場合
             e.preventDefault();
+            console.log('Default prevented.'); // デバッグログ追加
             const currentHeaderHeight = getHeaderHeight();
             const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - currentHeaderHeight;
 
+            console.log('Attempting to scroll to:', targetPosition); // デバッグログ追加
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -521,213 +525,136 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // --- Three.js 初期化関数 (テキストテクスチャ版 - 変更なし) ---
-function initThreeJS(container) {
-    console.log('initThreeJS called.');
-    let scene, camera, renderer, cube, clock, animationId = null;
+function initThreeJS() {
+    const container = document.getElementById('hero-3d-canvas');
+    if (!container) return;
 
-    function cleanup() {
-        console.log("Cleaning up Three.js resources...");
-        if (animationId) cancelAnimationFrame(animationId);
-        if (renderer) {
-            renderer.dispose();
-            if(renderer.domElement && container.contains(renderer.domElement)) {
-                try { container.removeChild(renderer.domElement); } catch (e) { console.warn("Could not remove renderer DOM element.", e); }
-            }
-        }
-        if (scene) {
-             scene.traverse(object => {
-                if (object.geometry) object.geometry.dispose();
-                if (object.material) {
-                    if (Array.isArray(object.material)) {
-                        object.material.forEach(material => {
-                            if (material.map) material.map.dispose();
-                            material.dispose();
-                        });
-                    } else {
-                        if (object.material.map) object.material.map.dispose();
-                        object.material.dispose();
-                    }
-                }
-            });
-        }
-        window.removeEventListener('resize', onWindowResize);
-         scene = null; camera = null; renderer = null; cube = null; clock = null;
-    }
-    cleanup(); // Start fresh
+    // シーンの設定
+    const scene = new THREE.Scene();
 
+    // カメラの設定
+    const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 5;
 
-    async function init() {
-        try {
-            console.log("Three.js init sequence started.");
-            if (container.clientWidth <= 0 || container.clientHeight <= 0) {
-                 console.warn("Three.js container has zero size. Aborting initialization.");
-                 return;
-            }
-             console.log(`Container size: ${container.clientWidth}x${container.clientHeight}`);
-            scene = new THREE.Scene(); // シーンの背景色設定を削除
-            console.log("Scene created.");
-            const aspect = container.clientWidth / container.clientHeight;
-            camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-            camera.position.z = 3.5; console.log("Camera created.");
+    // レンダラーの設定
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+    });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
 
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-            console.log("Renderer created and added to DOM.");
+    // 高級感のあるマテリアル
+    const navyMaterial = new THREE.MeshPhongMaterial({
+        color: 0x1a2a6c,      // ディープネイビー
+        specular: 0xaaccff,   // 青みがかった反射光
+        shininess: 90,        // 高い光沢
+        reflectivity: 0.9     // 反射率高め
+    });
 
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9); directionalLight.position.set(1, 2, 3).normalize(); scene.add(directionalLight);
-            console.log("Lights added.");
+    const goldMaterial = new THREE.MeshPhongMaterial({
+        color: 0xd4af37,      // ゴールド
+        specular: 0xffffaa,   // 黄色みがかった反射光
+        shininess: 100,       // 非常に高い光沢
+        reflectivity: 1       // 最大反射率
+    });
 
+    const purpleMaterial = new THREE.MeshPhongMaterial({
+        color: 0x4a3f6d,      // パープル
+        specular: 0xaaaaff,   // 紫みがかった反射光
+        shininess: 80,        // 高光沢
+        reflectivity: 0.8     // 高反射率
+    });
 
+    // 複数のジオメトリを作成
+    const mainCubeGeometry = new THREE.BoxGeometry(2, 2, 2);
+    const smallCubeGeometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+    const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 
+    // メッシュ作成
+    const mainCube = new THREE.Mesh(mainCubeGeometry, navyMaterial);
+    scene.add(mainCube);
 
-            // HDRI環境マップの読み込みと適用
-            const rgbLoader = new THREE.RGBELoader();
-            rgbLoader.load('textures/studio_small_03_1k.hdr', function (texture) {
-                texture.mapping = THREE.EquirectangularReflectionMapping;
-                scene.environment = texture;
+    const smallCube = new THREE.Mesh(smallCubeGeometry, goldMaterial);
+    smallCube.position.set(-2, 1.5, 0.5);
+    scene.add(smallCube);
 
-                // キューブのマテリアルに環境マップを設定 (マテリアルが配列なので各要素に設定)
-                if (cube && cube.material) {
-                     if (Array.isArray(cube.material)) {
-                         cube.material.forEach(mat => {
-                             mat.envMap = texture;
-                             mat.needsUpdate = true;
-                         });
-                     } else {
-                         cube.material.envMap = texture;
-                         cube.material.needsUpdate = true;
-                     }
-                } else {
-                     // キューブがまだ作成されていない場合は、マテリアル作成時にenvMapを設定できるよう、
-                     // テクスチャを保持しておくなどの対応が必要になるが、今回はシンプルにキューブ作成後に設定する前提とする。
-                     // より堅牢にするなら、initThreeJSの構造を見直す必要がある。
-                     console.warn("Cube or cube material not found when trying to apply envMap.");
-                }
-                 console.log("HDRI environment map loaded and applied.");
-            });
+    const sphere = new THREE.Mesh(sphereGeometry, purpleMaterial);
+    sphere.position.set(2, -1.5, -0.5);
+    scene.add(sphere);
 
+    // 光源
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
 
-            const geometry = new THREE.BoxGeometry(2.64, 2.64, 2.64); console.log("Geometry created."); // 1.2倍に拡大
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
 
-            // アイコン画像のパスリスト
-            const iconPaths = [
-                'TS ロゴ　デザイン.png',
-                'TS ロゴ　デザイン.png',
-                'TS ロゴ　デザイン.png',
-                'TS ロゴ　デザイン.png',
-                'TS ロゴ　デザイン.png',
-                'TS ロゴ　デザイン.png'
-            ];
+    const pointLight2 = new THREE.PointLight(0x6a3093, 1);
+    pointLight2.position.set(-5, -5, 2);
+    scene.add(pointLight2);
 
-            const textureLoader = new THREE.TextureLoader();
-            const materials = await Promise.all(iconPaths.map(async path => {
-                return new Promise((resolve, reject) => {
-                    textureLoader.load(path,
-                        function (texture) {
-                            // SVGの場合、背景が透過している可能性があるので、白背景のキャンバスに描画し直す
-                            const canvas = document.createElement('canvas');
-                            const context = canvas.getContext('2d');
-                            const size = 256; // テクスチャサイズ
-                            canvas.width = size;
-                            canvas.height = size;
-
-                            // キャンバス背景を少し青みがかった色に設定
-                            context.fillStyle = '#800020'; // ボルドー系 (重厚感を出す)
-                            context.fillRect(0, 0, size, size);
-
-                            // 画像を中央に描画 (アスペクト比を維持)
-                            const imgAspect = texture.image.width / texture.image.height;
-                            let drawWidth, drawHeight;
-                            if (imgAspect > 1) { // 横長
-                                drawWidth = size * 1.152; // 115.2%の幅 (さらに1.2倍に調整)
-                                drawHeight = drawWidth / imgAspect;
-                            } else { // 縦長または正方形
-                                drawHeight = size * 1.152; // 115.2%の高さ (さらに1.2倍に調整)
-                                drawWidth = drawHeight * imgAspect;
-                            }
-                            const drawX = (size - drawWidth) / 2;
-                            const drawY = (size - drawHeight) / 2;
-
-                            context.drawImage(texture.image, drawX, drawY, drawWidth, drawHeight);
-
-                            const finalTexture = new THREE.CanvasTexture(canvas);
-                            finalTexture.needsUpdate = true;
-                            texture.dispose(); // 元のテクスチャは解放
-
-                            resolve(new THREE.MeshPhysicalMaterial({
-                                map: finalTexture,
-                                color: 0xffffff, // 基本色を白に戻す
-                                transparent: true, // 透過を有効に
-                                transmission: 0.5, // 透過度を調整 (少し透過度を下げる)
-                                roughness: 1.0, // 粗さを維持して擦れた感じを出す
-                                ior: 1.5,      // 屈折率
-                                reflectivity: 0.5, // 反射率
-                                side: THREE.DoubleSide, // 両面をレンダリング
-                                thickness: 0.8 // 厚みを調整
-                            }));
-                        },
-                        undefined, // onProgressコールバックは不要
-                        function (err) {
-                            console.error('An error happened loading a texture:', path, err);
-                            // エラー時はデフォルトのマテリアルを返すか、エラーを示すマテリアルを返す
-                            resolve(new THREE.MeshBasicMaterial({ color: 0xff0000 })); // 赤色のマテリアル
-                        }
-                    );
-                });
-            }));
-            console.log("Materials created:", materials);
-
-            cube = new THREE.Mesh(geometry, materials);
-            cube.scale.set(0.9, 0.9, 0.9); // キューブを0.9倍に縮小
-            cube.rotation.x = 0.2; cube.rotation.y = 0.3;
-            scene.add(cube); console.log("Cube mesh created and added to scene.");
-
-            clock = new THREE.Clock();
-            window.addEventListener('resize', onWindowResize, false);
-            animate(); console.log("Animation loop started.");
-            gsap.fromTo(container, {opacity: 0}, { opacity: 1, duration: 1, delay: 0.2 });
-
-        } catch (error) {
-            console.error("Error during Three.js initialization:", error);
-             container.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">3D表示エラーが発生しました。<br><small>${error.message || '詳細不明'}</small></p>`;
-             cleanup();
-        }
-    }
-
-    function onWindowResize() {
-        if (!container || !camera || !renderer) return;
-        const width = Math.max(1, container.clientWidth);
-        const height = Math.max(1, container.clientHeight);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-        console.log("Resized Three.js canvas.");
-    }
+    // 回転角度を保存するための変数
+    let rotationX = 0;
+    let rotationY = 0;
 
     function animate() {
-        animationId = requestAnimationFrame(animate);
-        if (!renderer || !scene || !camera || !clock || !cube) return;
-        const delta = clock.getDelta();
-        // 回転速度を少し落とす
-        cube.rotation.x += delta * 0.1;
-        cube.rotation.y += delta * 0.15;
-        try { renderer.render(scene, camera); }
-        catch (renderError) { console.error("Error during Three.js rendering:", renderError); cleanup(); }
+        requestAnimationFrame(animate);
+
+        // メインキューブの回転
+        rotationX += 0.005;
+        rotationY += 0.007;
+        mainCube.rotation.x = rotationX;
+        mainCube.rotation.y = rotationY;
+
+        // 小さいキューブの回転
+        smallCube.rotation.x += 0.02;
+        smallCube.rotation.y += 0.01;
+
+        // 球体の回転
+        sphere.rotation.x += 0.01;
+        sphere.rotation.y += 0.02;
+
+        // メインキューブのパルスエフェクト
+        const pulseScale = 1 + 0.05 * Math.sin(Date.now() * 0.001);
+        mainCube.scale.set(pulseScale, pulseScale, pulseScale);
+
+        // 小さいキューブの動き
+        smallCube.position.y = 1.5 + 0.2 * Math.sin(Date.now() * 0.002);
+
+        // 球体の動き
+        sphere.position.x = 2 + 0.3 * Math.cos(Date.now() * 0.001);
+
+        renderer.render(scene, camera);
     }
 
-    // ---- 初期化実行 ----
-    // コンテナが存在し、表示されている（display:noneでない）ことを確認
-    if (container && (container.offsetParent !== null || window.getComputedStyle(container).display !== 'none')) {
-         init();
-    } else {
-         console.warn('Three.js container is not available or not visible initially.');
-         // 必要であれば表示監視ロジックを追加
+    animate();
+
+    // リサイズ対応
+    function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
     }
 
-} // initThreeJS end
+    window.addEventListener('resize', onWindowResize);
+
+    // マウス動きに応じたインタラクション
+    function onMouseMove(event) {
+        const rect = container.getBoundingClientRect();
+        const mouseX = ((event.clientX - rect.left) / container.clientWidth) * 2 - 1;
+        const mouseY = -((event.clientY - rect.top) / container.clientHeight) * 2 + 1;
+
+        // カメラを少し動かして立体感を強調
+        camera.position.x = mouseX * 0.5;
+        camera.position.y = mouseY * 0.5;
+        camera.lookAt(scene.position);
+    }
+
+    container.addEventListener('mousemove', onMouseMove);
+}
 
 // --- Perlinノイズ生成関数 (簡易版) ---
 // 参考: https://mrl.nyu.edu/~perlin/noise/
@@ -777,109 +704,3 @@ function PerlinNoise2D(x, y) {
 }
 
 // --- ノイズ背景初期化関数 ---
-function initNoiseBackground() {
-    console.log('Initializing noise background...');
-    const canvas = document.getElementById('noise-background');
-    if (!canvas) {
-        console.warn('Noise background canvas not found.');
-        return;
-    }
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-        console.error('Could not get 2D context for noise background canvas.');
-        return;
-    }
-
-    let animationFrameId = null;
-    let mouseX = 0, mouseY = 0; // マウス位置を保持
-
-    // Canvasサイズを更新する関数
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        console.log(`Noise canvas resized to ${canvas.width}x${canvas.height}`);
-    }
-
-    // マウス移動イベントリスナー
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    // 描画関数
-    function drawNoise() {
-        // Canvasをクリア
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // ノイズ描画設定
-        const scale = 0.02; // ノイズのスケール（値を小さくすると拡大される）
-        const time = performance.now() * 0.00005; // 時間経過による変化速度を調整
-        const mouseInfluence = 0.0005; // マウス位置の影響度を調整
-
-        // ヒーローセクションの背景色に合わせた色設定 (ダークブルー系)
-        const baseColor = { r: 27, g: 58, b: 95 }; // --main-color #1B3A5F
-        const accentColor = { r: 0, g: 255, b: 255 }; // --accent-color #00FFFF
-
-        // 描画点の密度とサイズ (パフォーマンス調整用)
-        const pointDensity = 30; // 値を大きくすると点が密になるが重くなる
-        const baseRadius = 1; // 基本の点のサイズ
-        const maxRadius = 3; // ノイズによる最大サイズ
-
-        for (let y = 0; y < canvas.height; y += pointDensity) {
-            for (let x = 0; x < canvas.width; x += pointDensity) {
-                // ノイズ値を計算
-                const noiseValue = PerlinNoise2D(
-                    x * scale + time + mouseX * mouseInfluence,
-                    y * scale + time + mouseY * mouseInfluence
-                );
-
-                // ノイズ値を0-1の範囲に正規化
-                const normalizedNoise = (noiseValue + 1) / 2;
-
-                // ノイズ値に基づいて点のサイズと透明度、位置のずれを決定
-                const radius = baseRadius + (maxRadius - baseRadius) * normalizedNoise;
-                const alpha = 0.1 + normalizedNoise * 0.4; // 0.1から0.5の間で変化
-                const offsetX = (noiseValue * 10); // ノイズによる位置のずれ
-                const offsetY = (noiseValue * 10);
-
-                // ノイズ値に基づいて色を決定
-                const r = Math.floor(baseColor.r + (accentColor.r - baseColor.r) * normalizedNoise * 0.3); // アクセントカラーの影響を抑える
-                const g = Math.floor(baseColor.g + (accentColor.g - baseColor.g) * normalizedNoise * 0.3);
-                const b = Math.floor(baseColor.b + (accentColor.b - baseColor.b) * normalizedNoise * 0.3);
-
-                ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-
-                // 円を描画
-                ctx.beginPath();
-                ctx.arc(x + offsetX, y + offsetY, radius, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        // 次のフレームを要求
-        animationFrameId = requestAnimationFrame(drawNoise);
-    }
-
-    // 初期化処理
-    resizeCanvas(); // 初回サイズ設定
-    window.addEventListener('resize', resizeCanvas); // リサイズイベントリスナー登録
-    drawNoise(); // 描画ループ開始
-
-    // クリーンアップ処理 (ページ遷移時など、必要であれば)
-    // window.addEventListener('beforeunload', () => {
-    //     if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    //     window.removeEventListener('resize', resizeCanvas);
-    //     document.removeEventListener('mousemove', handleMouseMove); // マウスイベントリスナーも削除
-    // });
-}
-
-// DOMContentLoadedイベント内でノイズ背景初期化関数を呼び出す
-document.addEventListener('DOMContentLoaded', () => {
-    // ... 既存のDOMContentLoaded内のコード ...
-
-    // ノイズ背景の初期化
-    initNoiseBackground();
-
-    // ... 既存のDOMContentLoaded内のコードの続き ...
-});
