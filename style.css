@@ -252,6 +252,7 @@ ul {
     max-width: 600px;
     z-index: 3; /* オーバーレイより手前に */
     position: relative; /* z-indexを有効にするために必要 */
+    margin-bottom: 40px; /* ヒーローコンテンツの下部にスペースを追加 */
 }
  
 .hero-catchphrase {
@@ -1656,4 +1657,21 @@ ul {
 .gradient-background-animation .flow-step-content {
     background-color: #ffffff; /* 不透明な白 */
     backdrop-filter: none; /* 霧ガラス効果を解除 */
+}
+
+/* 波のエフェクトにpointer-eventsを設定 */
+.wave-container {
+  pointer-events: none; /* マウスイベントを通過させる */
+}
+
+.wave-container svg,
+.wave-container path {
+  pointer-events: none;
+}
+
+/* CTAボタン位置の修正のみ */
+.hero-section .cta-button {
+  position: relative;
+  z-index: 10; /* 波エフェクトより前面に */
+  margin-bottom: 60px; /* 波エフェクトから離す */
 }
