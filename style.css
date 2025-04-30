@@ -1204,7 +1204,8 @@ ul {
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.4s ease, visibility 0.4s ease;
-        z-index: 1050; /* ナビより後ろ、コンテンツより手前 */
+        z-index: 1040; /* ナビより後ろ、コンテンツより手前 */
+        pointer-events: none; /* クリックイベントを透過 */
     }
     body.menu-open::before {
         opacity: 1;
