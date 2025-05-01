@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    console.log('DOM Content Loaded. Initializing script...');
+    // console.log('DOM Content Loaded. Initializing script...');
 
     // ----- 基本機能 -----
     const header = document.querySelector('.site-header');
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isHoverableDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     if (cursor && isHoverableDevice) {
-        console.log('Initializing custom cursor...');
+        // console.log('Initializing custom cursor...');
         cursor.style.opacity = '1'; // 初期表示
         body.style.cursor = 'none'; // 通常カーソル非表示
 
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. スクロール連動アニメーション (GSAP ScrollTrigger)
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        console.log('Initializing GSAP animations...');
+        // console.log('Initializing GSAP animations...');
         gsap.registerPlugin(ScrollTrigger);
 
         // --- 汎用 .animated-element アニメーション ---
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  once: true,
                  // markers: true, // デバッグ用
                  onEnter: () => {
-                     console.log("Animating hero description spans..."); // ★デバッグ用ログ追加
+                     // console.log("Animating hero description spans..."); // ★デバッグ用ログ追加
                      // トリガーされたら中の span をアニメーションさせる
                      gsap.to(heroDescSpans, { // ターゲットを修正
                          opacity: 1,
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ★★★ ヒーローキャッチコピー 3Dフリップアニメーション ★★★
         const heroCatchphraseChars = document.querySelectorAll('.hero-catchphrase .reveal-text-3d');
         if (heroCatchphraseChars.length > 0) {
-            console.log("Setting up hero catchphrase 3D animation..."); // ★デバッグ用ログ追加
+            // console.log("Setting up hero catchphrase 3D animation..."); // ★デバッグ用ログ追加
             // GSAPで初期状態を設定 (CSSと重複しても問題ない)
             gsap.set(heroCatchphraseChars, {
                  opacity: 0,
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 stagger: 0.05,     // 各文字間の遅延時間 (0.05くらいが標準的)
                 delay: 0.5         // 全体のアニメーション開始遅延 (0.5秒)
             });
-             console.log("Hero catchphrase animation scheduled."); // ★デバッグ用ログ追加
+             // console.log("Hero catchphrase animation scheduled."); // ★デバッグ用ログ追加
         } else {
              console.warn("Hero catchphrase characters (.reveal-text-3d) not found for animation.");
         }
@@ -301,11 +301,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. ヒーローセクションの3D回転キューブ (Three.js)
     const canvasContainer = document.getElementById('hero-3d-canvas');
     if (canvasContainer && typeof THREE !== 'undefined') {
-        console.log('Attempting to initialize Three.js...');
+        // console.log('Attempting to initialize Three.js...');
         // Intersection Observerで要素が表示されたら初期化
         const observer = new IntersectionObserver((entries, obs) => { // obs引数を追加
             if (entries[0].isIntersecting) {
-                console.log('Three.js container is visible, initializing...');
+                // console.log('Three.js container is visible, initializing...');
                 initThreeJS(canvasContainer);
                 obs.unobserve(canvasContainer); // 監視を解除
             }
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. FAQ アコーディオン機能
     const faqItems = document.querySelectorAll('.faq-item');
     if (faqItems.length > 0) {
-        console.log('Initializing FAQ accordion...');
+        // console.log('Initializing FAQ accordion...');
          faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             const answer = item.querySelector('.faq-answer');
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('form-message');
 
     if (contactForm && formMessage) {
-        console.log('Initializing contact form...');
+        // console.log('Initializing contact form...');
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault(); // デフォルトの送信を常に停止
             formMessage.textContent = ''; // メッセージクリア
