@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            console.log('Anchor clicked:', this.getAttribute('href')); // デバッグログ追加
+            // console.log('Anchor clicked:', this.getAttribute('href')); // デバッグログ追加
             const href = this.getAttribute('href');
             let targetElement = null;
             try {
                 // hrefが '#' または空文字でなく、かつセレクタとして有効な場合のみ要素を探す
                 if (href && href !== '#' && !href.startsWith('#') === false) {
                     targetElement = document.querySelector(href);
-                    console.log('Target element:', targetElement); // デバッグログ追加
+                    // console.log('Target element:', targetElement); // デバッグログ追加
                 }
             } catch (err) {
                 console.warn(`Invalid selector: ${href}`);
@@ -38,11 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ページ内リンクの場合
             e.preventDefault();
-            console.log('Default prevented.'); // デバッグログ追加
+            // console.log('Default prevented.'); // デバッグログ追加
             const currentHeaderHeight = getHeaderHeight();
             const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - currentHeaderHeight;
 
-            console.log('Attempting to scroll to:', targetPosition); // デバッグログ追加
+            // console.log('Attempting to scroll to:', targetPosition); // デバッグログ追加
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('mouseleave', () => body.classList.remove('link-hover'));
         });
     } else {
-        console.log('Custom cursor disabled (not a hoverable device or element not found).');
+        // console.log('Custom cursor disabled (not a hoverable device or element not found).');
         if(cursor) cursor.style.display = 'none'; // 念のため非表示
         body.style.cursor = 'auto'; // 通常カーソル表示を保証
     }
