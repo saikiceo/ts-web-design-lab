@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // console.log('DOM Content Loaded. Initializing script...');
 
     // ----- 基本機能 -----
     const header = document.querySelector('.site-header');
@@ -10,14 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            // console.log('Anchor clicked:', this.getAttribute('href')); // デバッグログ追加
             const href = this.getAttribute('href');
             let targetElement = null;
             try {
                 // hrefが '#' または空文字でなく、かつセレクタとして有効な場合のみ要素を探す
                 if (href && href !== '#' && !href.startsWith('#') === false) {
                     targetElement = document.querySelector(href);
-                    // console.log('Target element:', targetElement); // デバッグログ追加
                 }
             } catch (err) {
                 console.warn(`Invalid selector: ${href}`);
@@ -38,11 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ページ内リンクの場合
             e.preventDefault();
-            // console.log('Default prevented.'); // デバッグログ追加
             const currentHeaderHeight = getHeaderHeight();
             const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - currentHeaderHeight;
 
-            // console.log('Attempting to scroll to:', targetPosition); // デバッグログ追加
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
@@ -134,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const isHoverableDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     if (cursor && isHoverableDevice) {
-        // console.log('Initializing custom cursor...');
         cursor.style.opacity = '1'; // 初期表示
         body.style.cursor = 'none'; // 通常カーソル非表示
 
@@ -174,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
             el.addEventListener('mouseleave', () => body.classList.remove('link-hover'));
         });
     } else {
-        // console.log('Custom cursor disabled (not a hoverable device or element not found).');
         if(cursor) cursor.style.display = 'none'; // 念のため非表示
         body.style.cursor = 'auto'; // 通常カーソル表示を保証
     }
@@ -182,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. スクロール連動アニメーション (GSAP ScrollTrigger)
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        // console.log('Initializing GSAP animations...');
         gsap.registerPlugin(ScrollTrigger);
 
         // --- 汎用 .animated-element アニメーション ---
@@ -213,9 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  trigger: heroDesc,
                  start: 'top 85%',
                  once: true,
-                 // markers: true, // デバッグ用
                  onEnter: () => {
-                     // console.log("Animating hero description spans..."); // ★デバッグ用ログ追加
                      // トリガーされたら中の span をアニメーションさせる
                      gsap.to(heroDescSpans, { // ターゲットを修正
                          opacity: 1,
@@ -234,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // ★★★ ヒーローキャッチコピー 3Dフリップアニメーション ★★★
         const heroCatchphraseChars = document.querySelectorAll('.hero-catchphrase .reveal-text-3d');
         if (heroCatchphraseChars.length > 0) {
-            // console.log("Setting up hero catchphrase 3D animation..."); // ★デバッグ用ログ追加
             // GSAPで初期状態を設定 (CSSと重複しても問題ない)
             gsap.set(heroCatchphraseChars, {
                  opacity: 0,
@@ -257,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 stagger: 0.05,     // 各文字間の遅延時間 (0.05くらいが標準的)
                 delay: 0.5         // 全体のアニメーション開始遅延 (0.5秒)
             });
-             // console.log("Hero catchphrase animation scheduled."); // ★デバッグ用ログ追加
         } else {
              console.warn("Hero catchphrase characters (.reveal-text-3d) not found for animation.");
         }
@@ -305,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Intersection Observerで要素が表示されたら初期化
         const observer = new IntersectionObserver((entries, obs) => { // obs引数を追加
             if (entries[0].isIntersecting) {
-                // console.log('Three.js container is visible, initializing...');
                 initThreeJS(canvasContainer);
                 obs.unobserve(canvasContainer); // 監視を解除
             }
@@ -320,7 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. FAQ アコーディオン機能
     const faqItems = document.querySelectorAll('.faq-item');
     if (faqItems.length > 0) {
-        // console.log('Initializing FAQ accordion...');
          faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             const answer = item.querySelector('.faq-answer');
@@ -399,7 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('form-message');
 
     if (contactForm && formMessage) {
-        // console.log('Initializing contact form...');
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault(); // デフォルトの送信を常に停止
             formMessage.textContent = ''; // メッセージクリア
